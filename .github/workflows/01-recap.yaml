@@ -1,39 +1,31 @@
-name: Recap Workflow
+name: Hello World
 
 on:
   workflow_dispatch:
     inputs:
+      name:
+        description: "Name"
+        default: "Tanmay"
+        required: true
+      city:
+        default: "Ahmedabad"
+        required: true
       country:
+        default: "India"
         required: true
 
 jobs:
-  test:
+  hello-world:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-    - name: Install server dependencies
-      run: cd server && npm install
-    - name: Run server tests
-      run: cd server && npm test
-    - name: Echo country
-      run: echo "Country: ${{ github.event.inputs.country }}"
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-    - name: Install client dependencies
-      run: cd client && npm install
-    - name: Build client
-      run: cd client && npm run build
-    - name: Echo country
-      run: echo "Country: ${{ github.event.inputs.country }}"
+      - name: Say Hello
+        run: echo "Hello ${{ github.event.inputs.name }}"
+
+      - name: List Files
+        run: ls -la
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: List Files
+        run: ls -la
