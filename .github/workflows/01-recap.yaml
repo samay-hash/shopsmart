@@ -1,1 +1,39 @@
+name: Recap Workflow
+
 on:
+  workflow_dispatch:
+    inputs:
+      country:
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install server dependencies
+      run: cd server && npm install
+    - name: Run server tests
+      run: cd server && npm test
+    - name: Echo country
+      run: echo "Country: ${{ github.event.inputs.country }}"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install client dependencies
+      run: cd client && npm install
+    - name: Build client
+      run: cd client && npm run build
+    - name: Echo country
+      run: echo "Country: ${{ github.event.inputs.country }}"
